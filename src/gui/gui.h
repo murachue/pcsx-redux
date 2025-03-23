@@ -328,8 +328,8 @@ class GUI final : public UI {
     struct MemoryEditorWrapper {
         MemoryEditorWrapper(GUI *gui, bool &show, size_t &offsetAddr, size_t baseAddr = 0x0000)
             : m_show(show), m_offsetAddr(offsetAddr), m_baseAddr(baseAddr) {
-            editor.OptShowDataPreview = true;
-            editor.OptUpperCaseHex = false;
+            //editor.OptShowDataPreview = true;
+            //editor.OptUpperCaseHex = false;
             editor.PushMonoFont = [gui]() { gui->useMonoFont(); };
         }
         bool &m_show;

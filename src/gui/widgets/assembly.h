@@ -59,7 +59,7 @@ class Assembly : private Disasm {
     EventBus::Listener m_listener;
     bool m_followPC = false;
     bool m_pseudoFilling = true;
-    bool m_pseudo = true;
+    bool m_pseudo = false;
     bool m_delaySlotNotch = true;
     bool m_displayArrowForJumps = false;
     int m_numColumns = 4;
