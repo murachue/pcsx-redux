@@ -137,6 +137,25 @@ void PCSX::UI::shellReached() {
     }
     if (success) {
         g_system->log(LogClass::UI, "Successful: new PC = %08x...\n", regs.pc);
+        if (p.extension() == ".exe") {
+            std::filesystem::path sympath = std::filesystem::path(p).replace_extension(".sym");
+            // from assembly.cc
+            std::ifstream file;
+            // oh the irony
+            file.open(reinterpret_cast<const char*>(sympath.u8string().c_str()));
+            if (file) {
+                while (!file.eof()) {
+                    std::string addressString;
+                    std::string name;
+                    file >> addressString >> name;
+                    char* endPtr;
+                    uint32_t address = strtoul(addressString.c_str(), &endPtr, 16);
+                    bool addressValid = addressString[0] && !*endPtr;
+                    if (!addressValid) continue;
+                    g_emulator->m_cpu->m_symbols[address] = name;
+                }
+            }
+        }
     } else {
         g_system->log(LogClass::UI, "Failed to load %s, unknown file format.\n", p.string());
     }
