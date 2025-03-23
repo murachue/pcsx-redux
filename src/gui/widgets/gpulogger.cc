@@ -175,6 +175,7 @@ void PCSX::Widgets::GPULogger::draw(PCSX::GPULogger* logger, const char* title) 
     for (auto& logged : logger->m_list) {
         ImGui::PushID(n);
         if (m_filterEnabled && !logged.isInside(m_filter.x, m_filter.y)) {
+            ImGui::PopID();
             continue;
         }
         if (m_showOrigins) {
