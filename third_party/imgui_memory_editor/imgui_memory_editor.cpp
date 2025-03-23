@@ -406,9 +406,13 @@ void MemoryEditor::DrawOptionsLine(const Sizes& s, void* mem_data_void, size_t m
     if (GotoAddr != (size_t)-1) {
             if (GotoAddr < mem_size) {
                     ImGui::BeginChild("##scrolling");
+					if (PushMonoFont) PushMonoFont();
+					float lh = ImGui::GetTextLineHeight();
+					if (PushMonoFont) ImGui::PopFont();
+
                     ImGui::SetScrollFromPosY(
                         ImGui::GetCursorStartPos().y +
-                        (GotoAddr / Cols) * ImGui::GetTextLineHeight());
+                        (GotoAddr / Cols) * lh);
                     ImGui::EndChild();
                     DataEditingAddr = DataPreviewAddr = GotoAddr;
                     DataEditingTakeFocus = true;

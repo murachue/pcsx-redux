@@ -572,6 +572,7 @@ settings, otherwise debugging features may not work.)");
     ImGui::Text(_("In ISR: %s"), cpu->m_inISR ? _("yes") : _("no"));
 
     gui->useMonoFont();
+    glyphWidth = ImGui::GetFontSize();
 
     ImGuiStyle& style = ImGui::GetStyle();
     const float heightSeparator = style.ItemSpacing.y;
