@@ -319,6 +319,7 @@ class R3000Acpu {
     void psxSetPGXPMode(uint32_t pgxpMode);
 
     void scheduleInterrupt(unsigned interrupt, uint32_t eCycle) {
+        if (m_regs.interrupt & (1 << interrupt)) return;
         PSXIRQ_LOG("Scheduling interrupt %08x at %08x\n", interrupt, eCycle);
         const uint64_t cycle = m_regs.cycle;
         uint64_t target = cycle + uint64_t(eCycle * m_interruptScales[interrupt]);
