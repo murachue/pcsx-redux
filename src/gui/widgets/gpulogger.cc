@@ -152,7 +152,9 @@ void PCSX::Widgets::GPULogger::draw(PCSX::GPULogger* logger, const char* title) 
         ImGui::Text(_("%i primitives"), logger->m_list.size());
         GPU::GPUStats stats;
         for (auto& logged : logger->m_list) {
-            logged.cumulateStats(&stats);
+            if (logged.frame < m_frameCounterOrigin) {
+                logged.cumulateStats(&stats);
+            }
         }
         ImGui::Text(_("%i triangles"), stats.triangles);
         ImGui::Text(_("%i textured triangles"), stats.texturedTriangles);
@@ -174,7 +176,7 @@ void PCSX::Widgets::GPULogger::draw(PCSX::GPULogger* logger, const char* title) 
 
     for (auto& logged : logger->m_list) {
         ImGui::PushID(n);
-        if (m_filterEnabled && !logged.isInside(m_filter.x, m_filter.y)) {
+        if (logged.frame < m_frameCounterOrigin || (m_filterEnabled && !logged.isInside(m_filter.x, m_filter.y))) {
             ImGui::PopID();
             continue;
         }
